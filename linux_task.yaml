@@ -1,11 +1,12 @@
 ---
-- name: Get disk information
+- name: Gather disk information
   hosts: all
   tasks:
-    - name: Get information about disks using lsblk
-      command: lsblk -o NAME,SIZE,TYPE,MOUNTPOINT
-      register: disk_info
+    - name: Gather all facts
+      setup:
+        gather_subset:
+          - hardware
 
     - name: Print disk information
       debug:
-        var: disk_info.stdout_lines
+        var: ansible_devices  # In ra thông tin ổ đĩa
