@@ -1,7 +1,12 @@
 ---
 - name: Create PostgreSQL user with expiration date
-  hosts: database_servers
+  hosts: all
   become: true
   tasks:
     - name: Get info about disk
       shell: lsblk
+      register: disk_info  # Đăng ký biến để lưu trữ kết quả
+
+    - name: Print disk information
+      debug:
+        var: disk_info.stdout  # In ra thông tin từ biến đã đăng ký
