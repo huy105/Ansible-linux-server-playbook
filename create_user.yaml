@@ -1,0 +1,12 @@
+---
+- name: Create PostgreSQL user with expiration date
+  hosts: database_servers
+  become: true
+  tasks:
+    - name: Create PostgreSQL user with expiration date
+      community.postgresql.postgresql_user:
+        name: "{{ postgre_create_user.db_username }}"
+        password: "{{ postgre_create_user.db_password }}"
+        expires: "{{ postgre_create_user.user_expiration }}"
+        state: present
+      become_user: postgres

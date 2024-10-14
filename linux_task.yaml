@@ -1,0 +1,7 @@
+---
+- name: Create PostgreSQL user with expiration date
+  hosts: database_servers
+  become: true
+  tasks:
+    - name: Get info about disk
+      shell: lsblk

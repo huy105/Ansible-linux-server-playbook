@@ -1,0 +1,11 @@
+postgre_db:
+  version: 14
+  init_db_lib: psycopg2-binary
+  db_user: huylg  
+  db_password: huylg
+  db_name: test-ansible-db
+
+postgre_create_user:
+  db_username: "temp_user"
+  db_password: "temp_pass"
+  user_expiration: "2024-12-31 23:59:59"  # Thời gian hết hạn cho người dùng
