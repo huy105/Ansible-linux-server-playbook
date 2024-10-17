@@ -3,7 +3,7 @@
   hosts: all
   become: true
   vars_files:
-    - vars/service_vars.yaml  
+    - vars.yaml
   pre_tasks:
     - name: Update apt cache
       apt:
