@@ -1,0 +1,7 @@
+scp F:\JavaSpringBoot\hello-world\hello-world\target\hello-world-0.0.1-SNAPSHOT.jar huylg@10.10.2.73:/home/huylg/java-project
+
+mvn clean package
+
+java -jar ./hello-world-0.0.1-SNAPSHOT.jar
+
+http://10.10.2.73:8080/hello

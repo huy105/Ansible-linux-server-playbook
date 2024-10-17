@@ -1,0 +1,49 @@
+# https://github.com/prometheus/node_exporter/releases/download/v1.8.2/node_exporter-1.8.2.linux-amd64.tar.gz
+
+---
+- name: Install Prometheus Node Exporter
+  hosts: all
+  become: true
+  vars_files:
+    - vars/service_vars.yaml
+  tasks:
+    - name: Update APT package list
+      apt:
+        update_cache: yes
+    - name: Install wget packages
+      apt:
+        name: wget
+        state: present
+    - name: Download Node Exporter
+      get_url:
+        url: "{{ prometheus.node_exporter_url }}"
+        dest: /tmp/node_exporter.tar.gz
+    - name: Extract Node Exporter
+      unarchive:
+        src: /tmp/node_exporter.tar.gz
+        dest: /tmp/
+        remote_src: yes
+    - name: Move Node Exporter binary to /usr/local/bin
+      command: mv /tmp/{{ prometheus.folder_name }}/node_exporter /usr/local/bin/
+    - name: Create node exporter user
+      user:
+        name: nodeusr
+        system: yes
+        shell: /usr/sbin/nologin
+    - name: Create systemd service for Node Exporter
+      copy:
+        dest: /etc/systemd/system/node_exporter.service
+        content: "{{ prometheus.node_exporter_service_content }}"
+    - name: Reload systemd to recognize the new service
+      command: systemctl daemon-reload
+    - name: Start Node Exporter service
+      ansible.builtin.systemd_service:
+        name: node_exporter
+        enabled: yes
+        state: started
+    # - name: Ensure port 9100 is open (optional, adjust depending on your firewall)
+    #   ufw:
+    #     rule: allow
+    #     port: '9100'
+    #     proto: tcp
+    #     comment: 'Allow Prometheus Node Exporter'

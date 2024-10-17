@@ -1,0 +1,40 @@
+---
+- hosts: all
+  become: yes  # Thực hiện với quyền root
+  tasks:
+    - name: Xóa các tệp nhật ký hệ thống cũ hơn 30 ngày
+      register: log_files
+      find:
+        paths: /var/log
+        age: 30d
+        recurse: yes
+        file_type: file
+
+    - name: Xóa các tệp nhật ký
+      loop: "{{ log_files.files }}"
+      file:
+        path: "{{ item.path }}"
+        state: absent
+    
+    - name: Dọn dẹp thư mục tạm thời (/tmp)
+      file:
+        path: /tmp
+        state: absent
+        recurse: yes
+    
+    - name: Tạo lại thư mục tạm thời
+      file:
+        path: /tmp
+        state: directory
+        mode: 1777  # Quyền truy cập tạm thời mặc định
+---        
+- hosts: all
+  become: yes
+  tasks:
+    - name: Xóa bộ nhớ đệm apt
+      apt:
+        autoclean: yes
+
+    - name: Xóa bộ nhớ đệm yum (nếu sử dụng CentOS/RHEL)
+      command: yum clean all
+      when: ansible_os_family == "RedHat"

@@ -9,3 +9,20 @@ postgre_create_user:
   db_username: "temp_user"
   db_password: "temp_pass"
   user_expiration: "2024-12-31 23:59:59"  # Thời gian hết hạn cho người dùng
+
+prometheus:
+  node_exporter_url: https://github.com/prometheus/node_exporter/releases/download/v1.8.2/node_exporter-1.8.2.linux-amd64.tar.gz
+  folder_name: node_exporter-1.8.2.linux-amd64
+  node_exporter_service_content: |
+    [Unit]
+    Description=Node Exporter
+    Wants=network-online.target
+    After=network-online.target
+    [Service]
+    User=nodeusr
+    Group=nodeusr
+    Type=simple
+    ExecStart=/usr/local/bin/node_exporter
+    Restart=on-failure
+    [Install]
+    WantedBy=multi-user.target
