@@ -1,0 +1,20 @@
+---
+- name: Get users and last login times
+  hosts: your_target_hosts
+  become: yes
+  tasks:
+    - name: Get list of users
+      ansible.builtin.command: "cut -d: -f1 /etc/passwd"
+      register: users_output
+
+    - name: Get last login time for users
+      ansible.builtin.command: "last"
+      register: last_login_output
+
+    - name: Display users
+      ansible.builtin.debug:
+        msg: "{{ users_output.stdout_lines }}"
+
+    - name: Display last login times
+      ansible.builtin.debug:
+        msg: "{{ last_login_output.stdout }}"
