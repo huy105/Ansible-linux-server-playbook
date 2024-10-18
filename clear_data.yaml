@@ -30,4 +30,4 @@
 
     - name: Xóa data tong payload
       ansible.builtin.debug:
-        msg: "{{ ansible_eda_event.payload }}"
+        msg: "{{ dir_path }}"
