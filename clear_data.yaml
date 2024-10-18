@@ -30,4 +30,4 @@
 
     - name: Xóa data tong payload
       ansible.builtin.debug:
-        var: vars
+        msg: "{{ dir_path }}"
