@@ -1,0 +1,11 @@
+---        
+- hosts: all
+  become: yes
+  tasks:
+    - name: Xóa bộ nhớ đệm apt
+      apt:
+        autoclean: yes
+
+    - name: Xóa bộ nhớ đệm yum (nếu sử dụng CentOS/RHEL)
+      command: yum clean all
+      when: ansible_os_family == "RedHat"
