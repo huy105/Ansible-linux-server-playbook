@@ -2,32 +2,8 @@
 - hosts: all
   become: yes  # Thực hiện với quyền root
   tasks:
-    # - name: Xóa các tệp nhật ký hệ thống cũ hơn 30 ngày
-    #   register: log_files
-    #   find:
-    #     paths: /var/log
-    #     age: 30d
-    #     recurse: yes
-    #     file_type: file
-
-    # - name: Xóa các tệp nhật ký
-    #   loop: "{{ log_files.files }}"
-    #   file:
-    #     path: "{{ item.path }}"
-    #     state: absent
-    
-    # - name: Dọn dẹp thư mục tạm thời (/tmp)
-    #   file:
-    #     path: /tmp
-    #     state: absent
-    #     recurse: yes
-    
-    # - name: Tạo lại thư mục tạm thời
-    #   file:
-    #     path: /tmp
-    #     state: directory
-    #     mode: 1777  # Quyền truy cập tạm thời mặc định
-
-    - name: Xóa data tong payload
-      ansible.builtin.debug:
-        msg: "{{ dir_path }}"
+    - name: Kiểm tra biến payload và thực hiện hành động
+      when: ansible_eda.event.payload.clear_path is defined
+      ansible.builtin.file:
+        path: "{{ ansible_eda.event.payload.clear_path }}" 
+        state: absent
