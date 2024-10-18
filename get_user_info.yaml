@@ -1,6 +1,6 @@
 ---
 - name: Get users and last login times
-  hosts: your_target_hosts
+  hosts: all
   become: yes
   tasks:
     - name: Get list of users
