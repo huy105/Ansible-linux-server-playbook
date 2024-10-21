@@ -1,12 +1,12 @@
 ---
 - hosts: all
-  become: yes
+  become: true
   vars_files:
     - deploy_vars.yaml
   tasks:
   - name: Copy service jar file from control machine to target machine
     copy:
-      src: "{{ service.src_file }}"
+      src: "{{ service.service_name }}.service"
       dest: "{{ service.dest_file }}"
 
   - name: Copy systemd service file for Java app
