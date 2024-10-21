@@ -1,0 +1,32 @@
+---
+- hosts: all
+  become: yes
+  vars_files:
+    - deploy_vars.yaml
+  tasks:
+  - name: Copy service jar file from control machine to target machine
+    copy:
+      src: "{{ service.src_file }}"
+      dest: "{{ service.dest_file }}"
+
+  - name: Copy systemd service file for Java app
+    copy:
+      src: "{{ service.service_name }}.service"
+      dest: "/etc/systemd/system/{{ service.service_name }}.service"
+      owner: "{{ service.user }}"
+      group: "{{ service.group }}"
+      mode: "{{ service.mode }}"
+
+  - name: Reload systemd to apply new service
+    command: systemctl daemon-reload
+
+  - name: Enable Java app service to start on boot
+    systemd:
+      name: "{{ service.service_name }}"
+      enabled: yes
+      state: started
+
+  - name: Start Java app service
+    systemd:
+      name: "{{ service.service_name }}"
+      state: started

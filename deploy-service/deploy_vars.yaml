@@ -1,0 +1,7 @@
+service:
+  user: 1001
+  group: huylg
+  mode: '0644'
+  service_name: java-app
+  src_file: F:/JavaSpringBoot/hello-world/hello-world/target/hello-world-0.0.1-SNAPSHOT.jar
+  dest_file: /home/huylg/java-project/hello-world-0.0.1-SNAPSHOT.jar
