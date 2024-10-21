@@ -3,4 +3,5 @@ service:
   group: huylg
   mode: '0644'
   service_name: java-app
+  src_file: https://drive.google.com/uc?export=download&id=1uJvRVDKyuTUyQSzOTBdmcMSGDjZi5uca
   dest_file: /home/huylg/java-project/hello-world-0.0.1-SNAPSHOT.jar

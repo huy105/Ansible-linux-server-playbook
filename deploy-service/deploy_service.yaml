@@ -4,9 +4,9 @@
   vars_files:
     - deploy_vars.yaml
   tasks:
-  - name: Copy service jar file from control machine to target machine
-    copy:
-      src: "{{ service.service_name }}.service"
+  - name: Download file from Google Drive
+    get_url:
+      url: "{{ service.src_file }}"  
       dest: "{{ service.dest_file }}"
 
   - name: Copy systemd service file for Java app
