@@ -6,6 +6,9 @@ service:
   dest_file: /home/huylg/java-project/hello-world-0.0.1-SNAPSHOT.jar
   username: "admin"
 
+host:
+  serial: 1
+
 repository:
   username: "admin"
   password: "password"
