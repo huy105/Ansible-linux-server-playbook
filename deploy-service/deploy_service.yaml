@@ -4,10 +4,13 @@
   vars_files:
     - deploy_vars.yaml
   tasks:
-  - name: Download file from Google Drive
+  - name: Download file from repository
     get_url:
-      url: "{{ service.src_file }}"  
+      url: "{{ repository.name }}/repository/{{ repository.repo_name }}/{{ repository.artifact_path }}"
       dest: "{{ service.dest_file }}"
+      username: "{{ repository.username }}"      # Tên người dùng
+      password: "{{ repository.password }}"   # Mật khẩu
+      mode: '0644'   
 
   - name: Copy systemd service file for Java app
     copy:
