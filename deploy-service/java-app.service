@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 User=huylg
-WorkingDirectory=/opt/myapp
+WorkingDirectory=/home/huylg/java-project
 ExecStart=java -jar /home/huylg/java-project/hello-world-0.0.1-SNAPSHOT.jar
 SuccessExitStatus=143
 Restart=on-failure
