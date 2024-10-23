@@ -2,7 +2,7 @@
 - hosts: all
   become: yes  # Thực hiện với quyền root
   tasks:
-    - name: Kiểm tra biến payload và thực hiện hành động
+    - name: Check payload value and clear path value
       when: ansible_eda.event.payload.clear_path is defined
       ansible.builtin.file:
         path: "{{ ansible_eda.event.payload.clear_path }}" 
