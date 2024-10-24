@@ -1,0 +1,18 @@
+---        
+- hosts: all
+  become: true
+  vars_files:
+    - vars.yaml
+- name: "Add Internal DNS out rule"
+  loop: "{{ pfsense.pfsense_rule }}"
+  pfsensible.core.pfsense_rule:
+    name: "{{ item.name }}"
+    action: "{{ item.action }}"
+    interface: "{{ item.interface }}"
+    ipprotocol: "{{ item.ipprotocol }}"
+    protocol: "{{ item.protocol }}"
+    source: "{{ item.source }}"
+    destination: "{{ item.destination }}"
+    destination_port: "{{ item.destination_port }}"
+    after: "{{ item.after }}"
+    state: "{{ item.state }}"

@@ -26,3 +26,16 @@ prometheus:
     Restart=on-failure
     [Install]
     WantedBy=multi-user.target
+
+pfsense:
+  pfsense_rule:
+    - name: 'Allow Internal DNS traffic out'
+      action: pass
+      interface: lan
+      ipprotocol: inet
+      protocol: udp
+      source: dns_int
+      destination: any
+      destination_port: 53
+      after: 'Allow proxies out'
+      state: present
